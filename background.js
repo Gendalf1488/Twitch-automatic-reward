@@ -53,17 +53,36 @@ function stopClaiming() {
 function checkActiveTabForRewards() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs.length > 0) {
-      const tabId = tabs[0].id;
+      const tab = tabs[0];
+      const tabUrl = tab.url;
 
-      // Выполняем content.js на активной вкладке
-      chrome.scripting.executeScript({
-        target: { tabId },
-        files: ["content.js"]
-      }).catch((error) => {
-        console.error("Ошибка при выполнении content.js:", error);
-      });
+      // Проверяем, что URL соответствует Twitch
+      if (isTwitchPage(tabUrl)) {
+        const tabId = tab.id;
+
+        // Выполняем content.js на активной вкладке
+        chrome.scripting.executeScript({
+          target: { tabId },
+          files: ["content.js"]
+        }).catch((error) => {
+          console.error("Ошибка при выполнении content.js:", error);
+        });
+      } else {
+        console.log("Текущая вкладка не является страницей Twitch. Пропускаем.");
+      }
     }
   });
+}
+
+// Проверяем, является ли URL страницей Twitch
+function isTwitchPage(url) {
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.hostname === "www.twitch.tv" || parsedUrl.hostname === "twitch.tv";
+  } catch (error) {
+    console.error("Ошибка при анализе URL:", error);
+    return false;
+  }
 }
 
 // Обновляем счётчик наград
