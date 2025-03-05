@@ -3,7 +3,15 @@
   "name": "Авто Сборщик Наград",
   "version": "1.0",
   "description": "Автоматически собирает награды на сайте.",
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.twitch.tv/*" // Разрешаем доступ только к Twitch
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -12,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://www.twitch.tv/*"], // Ограничиваем content script только на Twitch
       "js": ["content.js"]
     }
   ]
