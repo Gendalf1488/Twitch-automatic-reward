@@ -9,4 +9,6 @@ Everything is ready, you have an extension! Pin it as usual in the row on the to
 
 Be careful, I am a developer from Russia and the entire interface is in Russian, but it does not matter how the extension works, the main thing is when you install the extension, activate it with the first button. The second button is responsible for resetting the reward counter.
 
+I'm sorry to give away $5 for registering as a developer and putting my extension on the market, so github helps out.
+
 Download only the latest release!
